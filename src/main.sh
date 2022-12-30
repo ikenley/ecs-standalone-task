@@ -1,4 +1,6 @@
 # Generic BASH script
+# The ECS task will spin up, run this script, and then exit
+# Local debugging:
 # DATA_LAKE_BUCKET_NAME=924586450630-data-lake ./src/main.sh
 
 echo "Open the pod bay doors, HAL"
