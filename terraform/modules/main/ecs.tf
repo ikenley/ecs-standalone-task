@@ -87,6 +87,10 @@ module "ecs_container_definition" {
       awslogs-stream-prefix = "ecs"
     }
   }
+
+  map_environment = {
+    DATA_LAKE_BUCKET_NAME = data.aws_ssm_parameter.data_lake_s3_bucket_name
+  }
 }
 
 resource "aws_ecs_task_definition" "this" {
