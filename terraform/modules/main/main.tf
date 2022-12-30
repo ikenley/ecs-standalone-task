@@ -13,5 +13,9 @@ locals {
     Environment = var.env
     is_prod     = var.is_prod
   })
+
+  # project-specific
+  container_cpu    = 256
+  container_memory = 1024
 }
 

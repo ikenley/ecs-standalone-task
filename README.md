@@ -24,11 +24,15 @@ terraform apply
 # Build and run docker image locally
 docker build --tag ecs-standalone-task .
 docker run --rm ecs-standalone-task HAL
-docker tag ecs-standalone-task:latest ecs-standalone-task:v1.0.0
+docker tag ecs-standalone-task:latest ecs-standalone-task:latest
 
 # Publish to AWS ECR
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 924586450630.dkr.ecr.us-east-1.amazonaws.com
 docker build --tag ecs-standalone-task .
-docker tag ecs-standalone-task:latest 924586450630.dkr.ecr.us-east-1.amazonaws.com/ik-dev-ecs-standalone-task:v1.0.0
-docker push 924586450630.dkr.ecr.us-east-1.amazonaws.com/ik-dev-ecs-standalone-task:v1.0.0
+docker tag ecs-standalone-task:latest 924586450630.dkr.ecr.us-east-1.amazonaws.com/ik-dev-ecs-standalone-task:latest
+docker push 924586450630.dkr.ecr.us-east-1.amazonaws.com/ik-dev-ecs-standalone-task:latest
+
+# Run the task
+# (This can also be done from the AWS ECS console)
+aws ecs run-task --cluster main --task-definition ik-dev-ecs-standalone-task:1
 ```
