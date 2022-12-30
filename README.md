@@ -34,5 +34,5 @@ docker push 924586450630.dkr.ecr.us-east-1.amazonaws.com/ik-dev-ecs-standalone-t
 
 # Run the task
 # (This can also be done from the AWS ECS console)
-aws ecs run-task --cluster main --task-definition ik-dev-ecs-standalone-task:1
+./scripts/run_task.sh
 ```
