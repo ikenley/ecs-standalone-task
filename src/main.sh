@@ -6,7 +6,6 @@
 echo "Open the pod bay doors, HAL"
 
 echo "DATA_LAKE_BUCKET_NAME=$DATA_LAKE_BUCKET_NAME"
-FILENAME_PREFIX="foo"
 OUTPUT_DIRECTORY="ecs-standalone-task/output"
 TIMESTAMP=$(date +%s)
 S3_KEY_PREFIX="${OUTPUT_DIRECTORY}/${FILENAME_PREFIX}-${TIMESTAMP}.txt"

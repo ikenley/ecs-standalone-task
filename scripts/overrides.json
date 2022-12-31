@@ -1,0 +1,13 @@
+{
+  "containerOverrides": [
+    {
+      "name": "ecs-standalone-task",
+      "environment": [
+        {
+          "name": "FILENAME_PREFIX",
+          "value": "example-env-var"
+        }
+      ]
+    }
+  ]
+}

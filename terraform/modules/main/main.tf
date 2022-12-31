@@ -4,7 +4,8 @@
 #------------------------------------------------------------------------------
 
 locals {
-  base_prefix   = [var.namespace, var.env, "ecs-standalone-task"]
+  project_name  = "ecs-standalone-task"
+  base_prefix   = [var.namespace, var.env, local.project_name]
   id_prefix     = join("-", local.base_prefix)
   output_prefix = join("/", local.base_prefix)
 

@@ -18,67 +18,13 @@ resource "aws_ecr_repository" "this" {
 #------------------------------------------------------------------------------
 # ECS Task
 #------------------------------------------------------------------------------
-resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "${local.id_prefix}-execution-role"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "ecs-tasks.amazonaws.com"
-        }
-      }
-    ]
-  })
-
-  tags = local.tags
-}
-
-resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy_attach" {
-  role       = aws_iam_role.ecs_task_execution_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-}
-
-resource "aws_iam_role" "ecs_task_role" {
-  name = "${local.id_prefix}-task-role"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "ecs-tasks.amazonaws.com"
-        }
-      }
-    ]
-  })
-
-  tags = local.tags
-}
-
-# resource "aws_iam_policy" "ecs_task_role_app_policy" {
-#   name        = "${var.name}-ecs-task-policy"
-#   description = "Additional permissions for ECS task application"
-
-#   policy = templatefile("${path.module}/ecs_task_role_policy.tpl", {
-#     name = var.name
-#   })
-# }
-
-# resource "aws_iam_role_policy_attachment" "ecs_task_role_app_policy_attach" {
-#   role       = aws_iam_role.ecs_task_role.name
-#   policy_arn = aws_iam_policy.ecs_task_role_app_policy.arn
-# }
 
 module "ecs_container_definition" {
   source  = "cloudposse/ecs-container-definition/aws"
   version = "0.56.0"
 
-  container_name  = aws_ecr_repository.this.name
-  container_image = "${aws_ecr_repository.this.repository_url}:latest"
+  container_name  = local.project_name
+  container_image = "${aws_ecr_repository.this.repository_url}:0.0.4"
   log_configuration = {
     logDriver = "awslogs",
     options = {
@@ -89,7 +35,8 @@ module "ecs_container_definition" {
   }
 
   map_environment = {
-    DATA_LAKE_BUCKET_NAME = data.aws_ssm_parameter.data_lake_s3_bucket_name
+    "DATA_LAKE_BUCKET_NAME" = data.aws_ssm_parameter.data_lake_s3_bucket_name.value
+    "FILENAME_PREFIX"       = "output"
   }
 }
 
