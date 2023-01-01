@@ -299,15 +299,27 @@ resource "aws_iam_policy" "codebuild" {
             "Resource": "*"
         },
         {
-            "Sid": "AllowSSMGetParametersDocker",
-            "Effect": "Allow",
-            "Action": [
-                "ssm:GetParameters"
-            ],
-            "Resource": [
-                "arn:aws:ssm:*:*:parameter/docker/*",
-                "arn:aws:ssm:*:*:parameter/${local.output_prefix}/codebuild/*"
-            ]
+          "Sid": "AllowSSMGetParametersDocker",
+          "Effect": "Allow",
+          "Action": [
+              "ssm:GetParameters"
+          ],
+          "Resource": [
+              "arn:aws:ssm:*:*:parameter/docker/*",
+              "arn:aws:ssm:*:*:parameter/${local.output_prefix}/codebuild/*"
+          ]
+        },
+        {
+          "Sid": "AllowECSUpdate",
+          "Effect": "Allow",
+          "Action": [
+              "ecs:List*",
+              "ecs:Describe*",
+              "ecs:UpdateService"
+          ],
+          "Resource": [
+            "${aws_ecs_task_definition.this.arn}"
+          ]
         }
     ]
 }

@@ -27,14 +27,3 @@ echo "NEW_TASK_DEFINITION=$NEW_TASK_DEFINITION"
 echo "$NEW_TASK_DEFINITION" > new_task_definition.json
 
 aws ecs register-task-definition --family ik-dev-ecs-standalone-task --cli-input-json "$NEW_TASK_DEFINITION"
-
-# TASK_DEFINITION="ik-dev-ecs-standalone-task:${REVISION}"
-# echo "TASK_DEFINITION=$TASK_DEFINITION"
-
-# aws ecs run-task \
-#     --cluster main \
-#     --task-definition $TASK_DEFINITION \
-#     --launch-type FARGATE \
-#     --network-configuration="awsvpcConfiguration={subnets=[subnet-0e6d4d3994a55e9bd,subnet-0f2afb4dd0b52058c,subnet-089b954f34fa50a96],securityGroups=[sg-0fefee4644905b541],assignPublicIp=DISABLED}" \
-#     --overrides file://scripts/overrides.json
-
