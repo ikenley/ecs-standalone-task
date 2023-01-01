@@ -175,6 +175,11 @@ resource "aws_codebuild_project" "docker_build" {
     }
 
     environment_variable {
+      name  = "IMAGE_NAME"
+      value = aws_ecr_repository.this.name
+    }
+
+    environment_variable {
       name  = "IMAGE_REPO_URL"
       value = aws_ecr_repository.this.repository_url
     }

@@ -5,6 +5,8 @@
 
 echo "Open the pod bay doors, HAL"
 
+echo "IMAGE_TAG=$IMAGE_TAG"
+
 echo "DATA_LAKE_BUCKET_NAME=$DATA_LAKE_BUCKET_NAME"
 OUTPUT_DIRECTORY="ecs-standalone-task/output"
 TIMESTAMP=$(date +%s)
