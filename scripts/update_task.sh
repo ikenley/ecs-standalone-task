@@ -8,9 +8,6 @@ OLD_TASK_DEFINITION=$(aws ecs describe-task-definition \
 
 echo "OLD_TASK_DEFINITION=$OLD_TASK_DEFINITION"
 
-# --query 'taskDefinition.revision' \
-# --output text
-
 IMAGE_URI="924586450630.dkr.ecr.us-east-1.amazonaws.com/ik-dev-ecs-standalone-task:554e3df"
 
 NEW_TASK_DEFINITION=$(echo $OLD_TASK_DEFINITION | \
