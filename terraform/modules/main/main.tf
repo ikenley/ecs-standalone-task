@@ -4,6 +4,7 @@
 #------------------------------------------------------------------------------
 
 data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
 
 locals {
   project_name  = "ecs-standalone-task"
@@ -12,6 +13,7 @@ locals {
   output_prefix = join("/", local.base_prefix)
 
   account_id = data.aws_caller_identity.current.account_id
+  aws_region = data.aws_region.current.name
 
   tags = merge(var.tags, {
     Terraform   = true

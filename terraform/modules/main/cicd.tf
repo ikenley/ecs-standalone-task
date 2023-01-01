@@ -222,106 +222,113 @@ resource "aws_iam_policy" "codebuild" {
 
   policy = <<EOF
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "AllowECR",
-            "Effect": "Allow",
-            "Action": [
-                "ecr:GetDownloadUrlForLayer",
-                "ecr:UploadLayerPart",
-                "ecr:PutImage",
-                "ecr:BatchGetImage",
-                "ecr:CompleteLayerUpload",
-                "ecr:InitiateLayerUpload",
-                "ecr:BatchCheckLayerAvailability"
-            ],
-            "Resource": [
-                "${aws_ecr_repository.this.arn}"
-            ]
-        },
-        {
-            "Sid": "AllowECRAuthorizationToken",
-            "Effect": "Allow",
-            "Action": [
-                "ecr:GetAuthorizationToken"
-            ],
-            "Resource": "*"
-        },
-        {
-            "Sid": "AllowS3",
-            "Effect": "Allow",
-            "Action": [
-                "s3:GetBucketAcl",
-                "s3:PutObject",
-                "s3:GetObject",
-                "s3:GetBucketLocation",
-                "s3:GetObjectVersion"
-            ],
-            "Resource": [
-                "${data.aws_ssm_parameter.code_pipeline_s3_bucket_arn.value}",
-                "${data.aws_ssm_parameter.code_pipeline_s3_bucket_arn.value}/*"
-            ]
-        },
-        {
-            "Sid": "AllowCodebuildReportGroup",
-            "Effect": "Allow",
-            "Action": [
-                "codebuild:CreateReportGroup",
-                "codebuild:CreateReport",
-                "codebuild:UpdateReport",
-                "codebuild:BatchPutCodeCoverages",
-                "codebuild:BatchPutTestCases"
-            ],
-            "Resource": [
-                "arn:aws:codebuild:us-east-1:${local.account_id}:report-group/${local.codebuild_project_name}-*"
-            ]
-        },
-        {
-            "Sid": "AllowLogs",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogGroup",
-                "logs:PutLogEvents",
-                "logs:CreateLogStream"
-            ],
-            "Resource": [
-                "arn:aws:logs:us-east-1:${local.account_id}:log-group:/aws/codebuild/${local.codebuild_project_name}",
-                "arn:aws:logs:us-east-1:${local.account_id}:log-group:/aws/codebuild/${local.codebuild_project_name}:*"
-            ]
-        },
-        {
-            "Sid": "AllowSSMDescribeParameters",
-            "Effect": "Allow",
-            "Action": [
-                "ssm:DescribeParameters"
-            ],
-            "Resource": "*"
-        },
-        {
-          "Sid": "AllowSSMGetParametersDocker",
-          "Effect": "Allow",
-          "Action": [
-              "ssm:GetParameters"
-          ],
-          "Resource": [
-              "arn:aws:ssm:*:*:parameter/docker/*",
-              "arn:aws:ssm:*:*:parameter/${local.output_prefix}/codebuild/*"
-          ]
-        },
-        {
-          "Sid": "AllowECSUpdate",
-          "Effect": "Allow",
-          "Action": [
-              "ecs:List*",
-              "ecs:Describe*",
-              "ecs:UpdateService"
-          ],
-          "Resource": [
-            "${aws_ecs_task_definition.this.arn}"
-          ]
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowECR",
+      "Effect": "Allow",
+      "Action": [
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:UploadLayerPart",
+          "ecr:PutImage",
+          "ecr:BatchGetImage",
+          "ecr:CompleteLayerUpload",
+          "ecr:InitiateLayerUpload",
+          "ecr:BatchCheckLayerAvailability"
+      ],
+      "Resource": [
+          "${aws_ecr_repository.this.arn}"
+      ]
+    },
+    {
+      "Sid": "AllowECRAuthorizationToken",
+      "Effect": "Allow",
+      "Action": [
+          "ecr:GetAuthorizationToken"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "AllowS3",
+      "Effect": "Allow",
+      "Action": [
+          "s3:GetBucketAcl",
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:GetBucketLocation",
+          "s3:GetObjectVersion"
+      ],
+      "Resource": [
+          "${data.aws_ssm_parameter.code_pipeline_s3_bucket_arn.value}",
+          "${data.aws_ssm_parameter.code_pipeline_s3_bucket_arn.value}/*"
+      ]
+    },
+    {
+      "Sid": "AllowCodebuildReportGroup",
+      "Effect": "Allow",
+      "Action": [
+          "codebuild:CreateReportGroup",
+          "codebuild:CreateReport",
+          "codebuild:UpdateReport",
+          "codebuild:BatchPutCodeCoverages",
+          "codebuild:BatchPutTestCases"
+      ],
+      "Resource": [
+          "arn:aws:codebuild:${local.aws_region}:${local.account_id}:report-group/${local.codebuild_project_name}-*"
+      ]
+    },
+    {
+      "Sid": "AllowLogs",
+      "Effect": "Allow",
+      "Action": [
+          "logs:CreateLogGroup",
+          "logs:PutLogEvents",
+          "logs:CreateLogStream"
+      ],
+      "Resource": [
+          "arn:aws:logs:${local.aws_region}:${local.account_id}:log-group:/aws/codebuild/${local.codebuild_project_name}",
+          "arn:aws:logs:${local.aws_region}:${local.account_id}:log-group:/aws/codebuild/${local.codebuild_project_name}:*"
+      ]
+    },
+    {
+      "Sid": "AllowSSMDescribeParameters",
+      "Effect": "Allow",
+      "Action": [
+          "ssm:DescribeParameters"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "AllowSSMGetParametersDocker",
+      "Effect": "Allow",
+      "Action": [
+          "ssm:GetParameters"
+      ],
+      "Resource": [
+          "arn:aws:ssm:*:*:parameter/docker/*",
+          "arn:aws:ssm:*:*:parameter/${local.output_prefix}/codebuild/*"
+      ]
+    },
+    {
+      "Sid": "ECSRead",
+      "Effect": "Allow",
+      "Action": [
+          "ecs:List*",
+          "ecs:Describe*"
+      ],
+      "Resource": ["*"]
+    },
+    {
+      "Sid": "ECSUpdate",
+      "Effect": "Allow",
+      "Action": [
+          "ecs:UpdateService"
+      ],
+      "Resource": [
+        "arn:aws:ecs:${local.aws_region}:${local.account_id}:task-definition/${aws_ecs_task_definition.this.family}*"
+      ]
+    }
+  ]
 }
 EOF
 }
