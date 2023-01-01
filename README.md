@@ -22,9 +22,9 @@ terraform apply
 
 ```
 # Build and run docker image locally
-docker build --tag ecs-standalone-task .
-docker run --rm ecs-standalone-task HAL
-docker tag ecs-standalone-task:0.0.1 ecs-standalone-task:0.0.1
+docker build --tag ecs-standalone-task --build-arg IMAGE_TAG=1234567 .
+docker run --rm -e FILENAME_PREFIX="local" -e DATA_LAKE_BUCKET_NAME=924586450630-data-lake ecs-standalone-task
+
 
 # Publish to AWS ECR
 ./scripts/docker_publish.sh 0.0.3

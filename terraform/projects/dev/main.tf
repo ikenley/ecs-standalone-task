@@ -31,5 +31,7 @@ module "main" {
   env       = local.env
   is_prod   = local.is_prod
 
+  git_branch_name = "cicd" # TODO change to "main
+
   tags = {}
 }

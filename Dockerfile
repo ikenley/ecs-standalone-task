@@ -10,4 +10,7 @@ WORKDIR /src
 
 COPY ./src .
 
+ARG IMAGE_TAG
+ENV IMAGE_TAG=$IMAGE_TAG
+
 ENTRYPOINT ["bash", "/src/main.sh"]

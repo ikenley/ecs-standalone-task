@@ -16,3 +16,7 @@ variable "is_prod" {
   description = ""
   type        = bool
 }
+
+variable "git_branch_name" {
+  type = string
+}
