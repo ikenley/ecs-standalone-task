@@ -319,6 +319,19 @@ resource "aws_iam_policy" "codebuild" {
           "ecs:UpdateService"
       ],
       "Resource": ["*"]
+    },
+    {
+      "Sid": "ECSPassRole",
+      "Action": "iam:PassRole",
+      "Effect": "Allow",
+      "Resource": [
+          "*"
+      ],
+      "Condition": {
+          "StringLike": {
+              "iam:PassedToService": "ecs-tasks.amazonaws.com"
+          }
+      }
     }
   ]
 }
