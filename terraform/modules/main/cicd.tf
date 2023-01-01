@@ -310,24 +310,15 @@ resource "aws_iam_policy" "codebuild" {
       ]
     },
     {
-      "Sid": "ECSRead",
-      "Effect": "Allow",
-      "Action": [
-          "ecs:List*",
-          "ecs:Describe*"
-      ],
-      "Resource": ["*"]
-    },
-    {
       "Sid": "ECSUpdate",
       "Effect": "Allow",
       "Action": [
+          "ecs:List*",
+          "ecs:Describe*",
           "ecs:RegisterTaskDefinition",
           "ecs:UpdateService"
       ],
-      "Resource": [
-        "arn:aws:ecs:${local.aws_region}:${local.account_id}:task-definition/${aws_ecs_task_definition.this.family}*"
-      ]
+      "Resource": ["*"]
     }
   ]
 }
