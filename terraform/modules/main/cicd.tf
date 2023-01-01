@@ -183,6 +183,11 @@ resource "aws_codebuild_project" "docker_build" {
       name  = "IMAGE_REPO_URL"
       value = aws_ecr_repository.this.repository_url
     }
+
+    environment_variable {
+      name  = "TASK_DEFINITION_FAMILY"
+      value = aws_ecs_task_definition.this.family
+    }
   }
 
   source {
