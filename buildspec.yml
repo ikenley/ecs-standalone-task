@@ -19,5 +19,5 @@ phases:
     commands:
       - echo Build completed on `date`
       - echo "Pushing the Docker image"
-      - docker push "${IMAGE_REPO_URL}:${TAG}"
+      - docker push "${IMAGE_REPO_URL}:${IMAGE_TAG}"
       - echo "TODO update task definition"
