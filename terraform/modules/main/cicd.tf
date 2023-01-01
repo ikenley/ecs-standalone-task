@@ -322,6 +322,7 @@ resource "aws_iam_policy" "codebuild" {
       "Sid": "ECSUpdate",
       "Effect": "Allow",
       "Action": [
+          "ecs:RegisterTaskDefinition",
           "ecs:UpdateService"
       ],
       "Resource": [

@@ -38,4 +38,5 @@ phases:
         jq 'del(.compatibilities)' | \
         jq 'del(.registeredAt)' | \
         jq 'del(.registeredBy)')
+      - echo "NEW_TASK_DEFINITION=$NEW_TASK_DEFINITION"
       - aws ecs register-task-definition --family $TASK_DEFINITION_FAMILY --cli-input-json "$NEW_TASK_DEFINITION"
