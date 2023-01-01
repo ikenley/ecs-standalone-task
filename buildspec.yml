@@ -10,6 +10,7 @@ phases:
   build:
     commands:
       - echo Build started on `date`
+      - echo "CODEBUILD_RESOLVED_SOURCE_VERSION=$CODEBUILD_RESOLVED_SOURCE_VERSION"
       # - IMAGE_TAG=$BRANCH_NAME-$CODEBUILD_BUILD_NUMBER
       # - echo "IMAGE_TAG=$IMAGE_TAG"
       # - ASPNETCORE_ENVIRONMENT=$ENV
