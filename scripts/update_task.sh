@@ -4,17 +4,19 @@
 TASK_DEFINITION_FAMILY=ik-dev-ecs-standalone-task
 
 OLD_TASK_DEFINITION=$(aws ecs describe-task-definition \
---task-definition ik-dev-ecs-standalone-task)
+--task-definition ik-dev-ecs-standalone-task | jq '.taskDefinition')
 
 echo "OLD_TASK_DEFINITION=$OLD_TASK_DEFINITION"
 
 # --query 'taskDefinition.revision' \
 # --output text
 
-NEW_TASK_DEFINITION=$(echo $OLD_TASK_DEFINITION | jq '.containerDefinitions[0].image='\"${ NEW_ECR_IMAGE }\")
+IMAGE_URI="924586450630.dkr.ecr.us-east-1.amazonaws.com/ik-dev-ecs-standalone-task:0.0.7"
+
+NEW_TASK_DEFINITION=$(echo $OLD_TASK_DEFINITION | jq -r '.containerDefinitions[0].image='\"${IMAGE_URI}\")
 echo "NEW_TASK_DEFINITION=$NEW_TASK_DEFINITION"
 
-aws ecs register-task-definition --family ik-dev-ecs-standalone-task — cli-input-json file://task-def.json
+#aws ecs register-task-definition --family ik-dev-ecs-standalone-task --cli-input-json "$NEW_TASK_DEFINITION"
 
 # TASK_DEFINITION="ik-dev-ecs-standalone-task:${REVISION}"
 # echo "TASK_DEFINITION=$TASK_DEFINITION"
